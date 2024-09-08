@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { json } from 'express';
 const app = express()
 import Stripe from 'stripe';
 import dotenv from "dotenv";
@@ -10,7 +10,10 @@ const stripe = new Stripe(process.env.SECRET_KEY)
 
 
 const port = process.env.PORT;
+app.use(express.json());
 
+// Middleware to parse URL-encoded bodies (if needed)
+app.use(express.urlencoded({ extended: true }));
 
 app.post('/payment/intents',async(req,res)=>{
     const customer =  await stripe.customers.create();
