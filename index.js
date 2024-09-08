@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.SECRET_KEY)
 const port = process.env.PORT;
 
 
-app.get('/payment/intents',async(req,res)=>{
+app.post('/payment/intents',async(req,res)=>{
     const customer =  await stripe.customers.create();
     const ephemeralKey = await stripe.ephemeralKeys.create(
         {customer: customer.id},
